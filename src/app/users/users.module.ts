@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule }  from '@angular/router';
 import { HttpModule }  from '@angular/http';
-import { AgGridModule } from 'ag-grid-angular/main';
-// import { GridOptions } from "ag-grid";
+import { DataTableModule } from "angular2-datatable";
+
 
 import { UsersComponent } from './users.component';
 import { UsersService } from './shared/users.service';
@@ -17,7 +17,7 @@ import { UserFormComponent } from './user-form/user-form.component';
     ReactiveFormsModule,
     RouterModule,
     HttpModule,
-    AgGridModule
+    DataTableModule
   ],
   declarations: [
     UsersComponent,
@@ -28,7 +28,6 @@ import { UserFormComponent } from './user-form/user-form.component';
   ],
   providers: [
     UsersService
-    // gridOptions
   ]
 })
 export class UsersModule { }

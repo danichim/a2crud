@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UsersService} from "./shared/users.service";
 import {User} from "./shared/user";
-// import {GridOptions} from "ag-grid";
-
 
 @Component({
   selector: 'app-users',
@@ -12,34 +10,31 @@ import {User} from "./shared/user";
 export class UsersComponent implements OnInit {
 
   private users: User[] = [];
-  // private gridOptions: GridOptions;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService) {  }
+
+    public filterQuery = "";
+    public rowsOnPage = 3;
+    public sortBy = "id";
+    public sortOrder = "asc";
 
   ngOnInit() {
+
     this.usersService.getUsers()
-      .subscribe(data => this.users = data);
-
-    // this.gridOptions = <GridOptions>{};
-    //     this.gridOptions.columnDefs = [
-    //         {
-    //             headerName: "ID",
-    //             field: "id",
-    //             width: 100
-    //         },
-    //         {
-    //             headerName: "Value",
-    //             field: "value",
-    //             cellRendererFramework: RedComponentComponent,
-    //             width: 100
-    //         },
-
-    //     ];
-    //     this.gridOptions.rowData = [
-    //         {id: 5, value: 10},
-    //         {id: 10, value: 15},
-    //         {id: 15, value: 20}
-    //     ]
+      .subscribe(// The 1st callback handles the data emitted by the observable.
+      // In your case, it's the JSON data extracted from the response.
+      // That's where you'll find your total property.
+      (data) => {
+        this.users = data;
+        console.log('this.users', this.users);
+        console.log('data', data);
+        // console.log('this.data', this.data);
+      },
+      // The 2nd callback handles errors.
+      (err) => console.error(err),
+      // The 3rd callback handles the "complete" event.
+      () => console.log("observable complete")
+    )
   }
 
   deleteUser(user){
@@ -55,6 +50,14 @@ export class UsersComponent implements OnInit {
             this.users.splice(index, 0, user);
           });
     }
+  }
+
+  public toInt(num: string) {
+    return +num;
+  }
+
+  public sortByWordLength = (a: any) => {
+    return a.city.length;
   }
 
 }
